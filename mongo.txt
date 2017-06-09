@@ -1,0 +1,169 @@
+1er ejercicio
+//Crear Base de Datos "Coleccion de usuarios"
+
+use usuarios
+
+db.usuarios.insertmany([
+    {nombre:"ruben", edad: 22}
+    {nombre:"alejandro", edad: 23},
+    {nombre:"samantha", edad: 24},
+    {nombre:"karla", edad: 25},
+    {nombre:"karina", edad: 26}
+])
+
+//Actualizar usuarios de edad 26 a 15
+
+try{
+    db.usuarios.updateMany(
+        {"edad":22},
+        {$set:{"edad":15}}
+    );
+}catch(e){
+    print(e);
+}
+
+//Actualizar usuarios 24 edad <= 22
+
+try{
+    db.usuarios.updateMany(
+        {"edad":{ $gte: 24}},
+        {$set:{"edad":22}}
+    );
+}catch(e){
+    print(e);
+}
+
+//Insert con upsert y replace
+
+try{
+    db.usuarios.insertOne(
+        {
+            nombre: "pepe",
+            edad: 27,
+        },
+        { upsert: true}
+    );
+}catch(e){
+    print(e);
+}
+
+
+//Segundo ejercicio
+//2da Colección, buscar y actualizar precios de tables de $4000 a $2000
+//Buscar y actualizar nombre y precio de PC a Computadora y su precio de $20,000  a $15,0000
+
+-----------------
+
+
+
+use inventario
+
+
+db.inventario.insertMany([
+    {articulo: "PC", precio:"20000" },
+    {articulo: "tablet", precio:"4000" },
+    {articulo: "teclado", precio:"3200" },
+    {articulo: "raton", precio:"200" },
+    {articulo: "smartphone", precio:"2300" },
+    {articulo: "monitor", precio:"1029" },
+    {articulo: "CPU", precio:"5600"  },
+    {articulo: "router", precio:"1300" },
+    {articulo: "USB", precio:"300" },
+    {articulo: "eliminador", precio:"700" }
+    ]
+)
+
+try{
+    db.inventario.updateOne(
+        {"articulo" : "PC"},
+        { $set: {
+            "articulo" : "computadora",
+            "precio" : "15000"
+            }
+        }
+    );
+}catch(e){
+    print(e);
+}
+
+
+try{
+    db.inventario.updateOne(
+        {"articulo" : "PC"},
+        { $set: {"precio" : "computadora"}}
+    );
+}catch(e){
+    print(e);
+}
+
+//Ejercicio 3, Facturas
+
+db.compradoresTest.insertMany([
+    {
+        nombre: "ruben",
+        apellido: "sanchez",
+        telefono: 5547878745,
+        RFC: "SYHA8328U3X",
+        factura: [
+            { folio: 21782, RFC: "SYHA8328U3X", fecha: "22-01-1992", monto: 4993 }, 
+            { folio: 21783, RFC: "SYHA8328U3X", fecha: "23-01-1992", monto: 5511 }, 
+            { folio: 21784, RFC: "SYHA8328U3X", fecha: "24-01-1992", monto: 4565 }, 
+            { folio: 21785, RFC: "SYHA8328U3X", fecha: "25-01-1992", monto: 2125 } 
+
+        ], 
+
+    },
+    {
+        nombre: "alejandro",
+        apellido: "colin",
+        telefono: 5589654789,
+        RFC: "COALE302903DFM",
+        factura: [
+            { folio: 21786, RFC: "COALE302903DFM", fecha: "22-01-1992", monto: 378 }, 
+            { folio: 21787, RFC: "COALE302903DFM", fecha: "24-01-1992", monto: 2110 }, 
+            { folio: 21788, RFC: "COALE302903DFM", fecha: "25-01-1992", monto: 5421 }, 
+            { folio: 21789, RFC: "COALE302903DFM", fecha: "26-01-1992", monto: 1800 } 
+
+        ]
+    },
+    {
+        nombre: "carlos",
+        apellido: "saldoval",
+        telefono: 557875452,
+        RFC: "CASMD38923DFH",
+        factura: [
+            { folio: 21790, RFC: "CASMD38923DFH", fecha: "30-03-2001", monto: 200 }, 
+            { folio: 21791, RFC: "CASMD38923DFH", fecha: "25-04-2001", monto: 198 }, 
+            { folio: 21792, RFC: "CASMD38923DFH", fecha: "28-04-2001", monto: 45 }, 
+            { folio: 21793, RFC: "CASMD38923DFH", fecha: "29-04-2001", monto: 105 } 
+
+        ]
+    }, 
+    {
+        nombre: "juan",
+        apellido: "pineda",
+        telefono: 5523589746,
+        RFC: "JAPI38239DFH",
+        factura: [
+            { folio: 21794, RFC: "JAPI38239DFH", fecha: "1-08-2002", monto: 200 }, 
+            { folio: 21795, RFC: "JAPI38239DFH", fecha: "8-09-2002", monto: 198 }, 
+            { folio: 21796, RFC: "JAPI38239DFH", fecha: "6-09-2002", monto: 45 }, 
+            { folio: 21797, RFC: "JAPI38239DFH", fecha: "1-10-2002", monto: 105 } 
+
+        ]
+    }, 
+    {
+        nombre: "andrea",
+        apellido: "rios",
+        telefono: 55245212,
+        RFC: "ANRI2636DBM",
+        factura: [
+            { folio: 21800, RFC: "ANRI2636DBM", fecha: "22-05-2003", monto: 452 }, 
+            { folio: 21801, RFC: "ANRI2636DBM", fecha: "8-05-2003", monto: 505 }, 
+            { folio: 21802, RFC: "ANRI2636DBM", fecha: "6-06-2003", monto: 466 }, 
+            { folio: 21803, RFC: "ANRI2636DBM", fecha: "1-07-2003", monto: 231 } 
+
+        ]
+    }
+]);
+
